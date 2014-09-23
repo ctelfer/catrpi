@@ -1,3 +1,11 @@
+/*
+ * include/xmodem.h -- xmodem protocol header file
+ *
+ * by Christopher Adam Telfer
+ *
+ * Copyright 2014 -- See accompanying license
+ *
+ */
 #ifndef __xmodem_h
 #define __xmodem_h
 

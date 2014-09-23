@@ -1,3 +1,12 @@
+/*
+ * src/rpi.c -- Core C API functions
+ *
+ * by Christopher Adam Telfer
+ *
+ * Copyright 2014 See accompanying license
+ *
+ */
+
 #include <rpi.h>
 
 #ifndef UART_USE_IRQ

@@ -3,11 +3,11 @@
  *
  * by Christopher Adam Telfer
  *
- * Copyright 2003-2014 -- See accompanying license
+ * Copyright 2014 -- See accompanying license
  *
  */
-#ifndef __catstddef_h
-#define __catstddef_h
+#ifndef __stddef_h
+#define __stddef_h
 
 /* 
  * These are best guesses that you can substitute on your own machine if 
@@ -19,4 +19,4 @@ typedef unsigned short wchar_t;
 #define offsetof(type, field) ((ulong)&((type *)0)->field)
 #define NULL ((void *)0)
 
-#endif /* __catstddef_h */
+#endif /* __stddef_h */

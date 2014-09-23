@@ -1,3 +1,12 @@
+/*
+ * src/xmodem.c -- xmodem protocol
+ *
+ * by Christopher Adam Telfer
+ *
+ * Copyright 2014 See accompanying license
+ *
+ */
+
 #include <xmodem.h>
 
 const char *xm_errstr[] = { 

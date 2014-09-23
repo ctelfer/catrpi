@@ -1,3 +1,12 @@
+/*
+ * include/rpi.h -- API header for core RPI library code.
+ *
+ * by Christopher Adam Telfer
+ *
+ * Copyright 2014 See accompanying license
+ *
+ */
+
 #ifndef __RPI_H
 #define __RPI_H
 

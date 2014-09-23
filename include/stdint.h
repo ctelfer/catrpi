@@ -1,5 +1,5 @@
 /*
- * stdint.h -- type definitions that work even when stdint.h isn't present.
+ * include/stdint.h -- type definitions 
  *
  * by Christopher Adam Telfer
  *
