@@ -1,17 +1,15 @@
 BASE=../..
-CATLIB=$(BASE)/../catlib
 ARMGNU=arm-none-eabi
 ORIGIN=0x10000
-LENGTH=0x1000000
+LENGTH=0x10000
 
 
 ASFLAGS=--defsym origin=$(ORIGIN)
 
-CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -DUART_USE_IRQ=1 \
-       -DCAT_USE_STDLIB=0 -DCAT_HAS_POSIX=0 -DCAT_HAS_LONGLONG=0 \
-       -I$(BASE)/include -I$(CATLIB)/include/std -I$(CATLIB)/include
+CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -I$(BASE)/include \
+       -DUART_USE_IRQ=1
 
-LDFLAGS= -L$(CATLIB)/lib -lcat_nolibc
+LDFLAGS=
 
 
 all: serial2.hex serial2.bin

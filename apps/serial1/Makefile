@@ -1,7 +1,7 @@
 BASE=../..
 CATLIB=$(BASE)/../catlib
 ARMGNU=arm-none-eabi
-ORIGIN=0x10000
+ORIGIN=0x8000
 LENGTH=0x10000
 
 

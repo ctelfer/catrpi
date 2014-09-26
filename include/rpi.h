@@ -40,16 +40,6 @@ int nlz(uint32_t x);
 /* Return the first bit set in x starting with the LSB or -1 if zero */
 int ffs(uint32_t x);
 
-void *memmove(void *d, const void *s, uint len);
-
-void *memcpy(void *d, const void *s, uint len);
-
-void *memset(void *d, uchar x, uint len);
-
-int memcmp(const void *s1, const void *s2, uint len);
-
-uint strlen(const char *s);
-
 /* GPIO */
 #define GPIO_FSEL0	0x20200000
 #define GPIO_FSEL1	0x20200004

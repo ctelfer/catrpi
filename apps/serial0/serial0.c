@@ -7,7 +7,6 @@ void main(void)
 	const char hw[] = "\r\nHello World!\r\n";
 
 	rpi_uart_init();
-	irq_enable();
 
 	rpi_uart_send(hw, sizeof(hw)-1);
 

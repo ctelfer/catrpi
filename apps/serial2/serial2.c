@@ -1,21 +1,29 @@
 #include <rpi.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <cat/str.h>
 
-void prx(uint32_t x)
+extern int uart_txfifo_fill(void);
+
+
+uint strlen(const char *s)
 {
-	char str[64] = "0x";
-	snprintf(str, sizeof(str), "0x%08x\r\n", x);
-	rpi_uart_send(str, strlen(str));
+	uint len = 0;
+	while ( *s++ != '\0' ) ++len;
+	return len;
 }
 
 
-void prd(uint32_t x)
+void prx(uint32_t x)
 {
-	char str[32] = "dd";
-	snprintf(str, sizeof(str), "%u\r\n", x);
-	rpi_uart_send(str, strlen(str));
+	char str[16] = "0x";
+	char *cp = str + 2;
+	int i;
+	int d;
+	for ( i = 28; i >= 0; i -= 4 ) {
+		d = (x >> i) & 0xF;
+		*cp++ = d < 10 ? d + '0' : d - 10 + 'A';
+	}
+	*cp++ = '\r';
+	*cp++ = '\n';
+	rpi_uart_send(str, cp - str);
 }
 
 
@@ -25,36 +33,41 @@ void uart_puts(const char *s)
 }
 
 
+void uart_tx_flush(void)
+{
+	while ( uart_txfifo_fill() )
+		;
+}
+
+
 void main(void)
 {
 	uchar c;
 	char nl = '\n';
 	const char hw[] = "Hello World!\r\n";
-	char str[80];
+	uint i;
 
 	irq_init();
 	rpi_uart_init();
 	irq_enable();
 	rpi_uart_send(hw, sizeof(hw)-1);
-	uart_puts(hw);
-	str_copy(str, "hi there again\r\n", sizeof(str));
-	uart_puts(str);
-	snprintf(str, sizeof(str), "snprintf() test\r\n");
-	uart_puts(str);
-	prx(peek32(0));
-	prx(peek32((uint)hw));
-	prx(12345);
-	prx(0xFFFFFFFF);
-	prd(peek32(0));
-	prd(peek32((uint)hw));
-	prd(12345);
-	prd(0xFFFFFFFF);
 
+	i = 0;
 	while ( 1 ) {
 		if ( rpi_uart_recv(&c, 1) ) {
 			if ( c == '\r' )
 				rpi_uart_send(&nl, 1);
 			rpi_uart_send(&c, 1);
-		} 
+			i = 0;
+		} else {
+			++i;
+			if ( i > 0xFFFFF ) {
+				irq_disable();
+				uart_puts("Idle ping...\r\n");
+				uart_tx_flush();
+				irq_enable();
+				i = 0;
+			}
+		}
 	}
 }
