@@ -26,6 +26,7 @@ static int uart_send_all(const void *p, int len)
 	return sent;
 }
 
+
 static void uart_puts(const char *s)
 {
 	const char *sp = s;

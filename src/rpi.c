@@ -263,8 +263,7 @@ int rpi_uart_send(const void *data, int len)
 		++uart.stail;
 		++i;
 	}
-	if ( uart_txfifo_empty() )
-		uart_txfifo_fill();
+	uart_txfifo_fill();
 	irq_enable();
 	return i;
 #endif
