@@ -9,7 +9,7 @@ ASFLAGS=--defsym origin=$(ORIGIN)
 
 CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -DUART_USE_IRQ=1 \
        -DCAT_USE_STDLIB=0 -DCAT_HAS_POSIX=0 -DCAT_HAS_LONGLONG=0 \
-       -I$(BASE)/include -I$(CATLIB)/include/std -I$(CATLIB)/include
+       -I$(BASE)/src -I$(CATLIB)/include/std -I$(CATLIB)/include
 
 LDFLAGS= -L$(CATLIB)/lib -lcat_nolibc
 

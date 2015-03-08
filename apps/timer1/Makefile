@@ -2,8 +2,7 @@ BASE=../..
 ARMGNU=arm-none-eabi
 
 ASFLAGS=--defsym origin=0x10000 
-CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding \
-       -I$(BASE)/include
+CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -I$(BASE)/src
 
 LDFLAGS=
 
@@ -20,7 +19,7 @@ clean:
 core.o: $(BASE)/src/core.s
 	$(ARMGNU)-as $(ASFLAGS) $(BASE)/src/core.s -o core.o
 
-rpi.o: $(BASE)/src/rpi.c $(BASE)/include/rpi.h
+rpi.o: $(BASE)/src/rpi.c $(BASE)/src/rpi.h
 	$(ARMGNU)-gcc $(CFLAGS) -c $(BASE)/src/rpi.c -o rpi.o
 
 timer1.o: timer1.c

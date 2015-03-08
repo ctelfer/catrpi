@@ -3,7 +3,7 @@ ARMGNU=arm-none-eabi
 
 ASFLAGS=--defsym origin=0x8000 
 CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding \
-       -I$(BASE)/include -DUART_USE_IRQ=0
+       -I$(BASE)/src -DUART_USE_IRQ=0
 
 LDFLAGS=
 
@@ -20,10 +20,10 @@ clean:
 core.o: $(BASE)/src/core.s
 	$(ARMGNU)-as $(ASFLAGS) $(BASE)/src/core.s -o core.o
 
-rpi.o: $(BASE)/src/rpi.c $(BASE)/include/rpi.h
+rpi.o: $(BASE)/src/rpi.c $(BASE)/src/rpi.h
 	$(ARMGNU)-gcc $(CFLAGS) -c $(BASE)/src/rpi.c -o rpi.o
 
-serial0.o: serial0.c $(BASE)/include/rpi.h
+serial0.o: serial0.c $(BASE)/src/rpi.h
 	$(ARMGNU)-gcc $(CFLAGS) -c serial0.c -o serial0.o
 
 serial0.elf: memmap core.o rpi.o serial0.o 

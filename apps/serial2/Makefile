@@ -6,7 +6,7 @@ LENGTH=0x10000
 
 ASFLAGS=--defsym origin=$(ORIGIN)
 
-CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -I$(BASE)/include \
+CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -I$(BASE)/src \
        -DUART_USE_IRQ=1
 
 LDFLAGS=

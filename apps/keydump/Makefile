@@ -14,7 +14,7 @@ CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -DUART_USE_IRQ=1 \
 LDFLAGS= -L$(CATLIB)/lib -lcat_nolibc
 
 
-all: rbtree0.hex rbtree0.bin
+all: keydump.hex keydump.bin
 
 clean:
 	rm -f *.o
@@ -33,16 +33,16 @@ core.o: $(BASE)/src/core.s
 rpi.o: $(BASE)/src/rpi.c
 	$(ARMGNU)-gcc $(CFLAGS) -c $(BASE)/src/rpi.c -o rpi.o
 
-rbtree0.o: rbtree0.c
-	$(ARMGNU)-gcc $(CFLAGS) -c rbtree0.c -o rbtree0.o
+keydump.o: keydump.c
+	$(ARMGNU)-gcc $(CFLAGS) -c keydump.c -o keydump.o
 
-rbtree0.elf: memmap core.o rpi.o rbtree0.o 
-	$(ARMGNU)-ld core.o rbtree0.o rpi.o -T memmap -o rbtree0.elf $(LDFLAGS)
-	$(ARMGNU)-objdump -D rbtree0.elf > rbtree0.list
+keydump.elf: memmap core.o rpi.o keydump.o 
+	$(ARMGNU)-ld core.o keydump.o rpi.o -T memmap -o keydump.elf $(LDFLAGS)
+	$(ARMGNU)-objdump -D keydump.elf > keydump.list
 
-rbtree0.bin: rbtree0.elf
-	$(ARMGNU)-objcopy rbtree0.elf -O binary rbtree0.bin
+keydump.bin: keydump.elf
+	$(ARMGNU)-objcopy keydump.elf -O binary keydump.bin
 
-rbtree0.hex : rbtree0.elf
-	$(ARMGNU)-objcopy rbtree0.elf -O ihex rbtree0.hex
+keydump.hex : keydump.elf
+	$(ARMGNU)-objcopy keydump.elf -O ihex keydump.hex
 
