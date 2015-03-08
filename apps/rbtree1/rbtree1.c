@@ -1,13 +1,14 @@
 #include <rpi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 #include <cat/catlibc.h>
 #include <cat/str.h>
 #include <cat/rbtree.h>
 #include <cat/stduse.h>
 
-#define NOPS 256
+#define NOPS 1024
 #define NITER (NOPS * 128)
 
 

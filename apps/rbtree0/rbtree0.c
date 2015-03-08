@@ -8,7 +8,7 @@
 #include <cat/rbtree.h>
 #include <cat/stduse.h>
 
-#define NOPS 256
+#define NOPS 1024
 #define NITER (NOPS * 128)
 
 
