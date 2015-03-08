@@ -14,7 +14,7 @@ CFLAGS=-Wall -O2 -nostdlib -nostartfiles -ffreestanding -DUART_USE_IRQ=1 \
 LDFLAGS= -L$(CATLIB)/lib -lcat_nolibc
 
 
-all: mouse.hex mouse.bin
+all: mouse0.hex mouse0.bin
 
 clean:
 	rm -f *.o
@@ -36,17 +36,17 @@ rpi.o: $(BASE)/src/rpi.c
 ansi.o: $(BASE)/src/ansi.c
 	$(ARMGNU)-gcc $(CFLAGS) -c $(BASE)/src/ansi.c -o ansi.o
 
-mouse.o: mouse.c
-	$(ARMGNU)-gcc $(CFLAGS) -c mouse.c -o mouse.o
+mouse0.o: mouse0.c
+	$(ARMGNU)-gcc $(CFLAGS) -c mouse0.c -o mouse0.o
 
-mouse.elf: memmap core.o rpi.o ansi.o mouse.o
-	$(ARMGNU)-ld core.o rpi.o ansi.o mouse.o -T memmap -o mouse.elf \
+mouse0.elf: memmap core.o rpi.o ansi.o mouse0.o
+	$(ARMGNU)-ld core.o rpi.o ansi.o mouse0.o -T memmap -o mouse0.elf \
 	       	$(LDFLAGS)
-	$(ARMGNU)-objdump -D mouse.elf > mouse.list
+	$(ARMGNU)-objdump -D mouse0.elf > mouse0.list
 
-mouse.bin: mouse.elf
-	$(ARMGNU)-objcopy mouse.elf -O binary mouse.bin
+mouse0.bin: mouse0.elf
+	$(ARMGNU)-objcopy mouse0.elf -O binary mouse0.bin
 
-mouse.hex : mouse.elf
-	$(ARMGNU)-objcopy mouse.elf -O ihex mouse.hex
+mouse0.hex : mouse0.elf
+	$(ARMGNU)-objcopy mouse0.elf -O ihex mouse0.hex
 
