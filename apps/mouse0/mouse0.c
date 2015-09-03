@@ -244,7 +244,7 @@ void prompt_play_again(void)
 	int len;
 	term_goto(NROWS, 0);
 
-	if ( status == FOUND)
+	if ( status == FOUND )
 		len = snprintf(str, sizeof(str),
 			       "Mouse found the cheese!  :)  "
 			       "Press any key to restart!");
