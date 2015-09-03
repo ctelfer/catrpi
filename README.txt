@@ -1,8 +1,11 @@
 This repo contains a small set of programs and libraries that I wrote to
 experiment with some bare metal programming on the Raspberry Pi.  Some
 of this code is standalone while other parts use the catlib library
-found at git@gitorious.org:catlib/catlib.git.  The directory layout for this
-repo is as follows:
+found at:
+  * https://gitlab.com/catlib/catlib.git
+  * https://github.com/ctelfer/catlib.git
+
+The directory layout for this repo is as follows:
 
   - apps/
 	Contains a series of specific applications.  Some of these are
@@ -87,6 +90,16 @@ The applications in this repository are as follows:
 	compared to rbtree0.  This program must be built against catlib and must
 	be loaded by the "loader" program.
 
+  - keydump
+	A utility program I wrote to dump hex codes received over the serial
+	line to help decode meta characters.  Press a key and the RPI will
+	echo back the hex codes for the characters that keypress generated.
+
+  - mouse0
+	A toy program that uses the RPI to run a little mouse through a
+	text-based game.  Uses vt100 terminal commands to run the game.  This
+	was based on an early project from my first programming class.
+
 
 --------
 BUILDING
@@ -94,8 +107,8 @@ BUILDING
 
 To build the applications that run standalone one must have install the 
 arm-none-eabi gcc toolchain and binutils tool suite.  These programs must be
-in the default path.  One builds the programs by simply typing "make" in
-each programs respective directory.
+in the default path.  One builds the programs in this repository by simply
+typing "make" in each program's respective directory.
 
 To build applications that depend on catlib one must first build catlib
 for Raspberry Pi.  To to so:
@@ -103,26 +116,32 @@ for Raspberry Pi.  To to so:
   # Clone the git repository
   # Do this at the same directory level as the catrpi repo.  So if the 
   # catrpi repo is at /a/b/c/catrpi, then issue the clone command in
-  # the /a/b/c/ directory.
-  git clone git@gitorious.org:catlib/catlib.git
+  # the /a/b/c/ directory.  This should produce a directory named
+  # /a/b/c/catlib which catrpi will be able to find.
+    git clone https://gitlab.com/catlib/catlib.git
+  # or alternately
+    git clone https://github.com/ctelfer/catlib.git
 
   # Configure the catlib for building against the Raspberry Pi
-  cd catlib/conf
-  cp build_system.conf.arm build_system.conf
+    cd catlib/conf
+    cp build_system.conf.arm build_system_override.conf
 
-  # Edit build_system.conf to make sure it has the proper paths to the
-  # toolchain (gcc, ar, ranlib) and the toolchain headers
+  # Edit build_system_override.conf to make sure it has the proper paths
+  # to the toolchain (gcc, ar, ranlib) and the toolchain headers
   # /path/to/arm/toolchain-root/lib/gcc/arm-none-eabi/4.8.3/include
-  vi build_system.conf
+  # You can avoid setting paths to arm toolchain binaries if the
+  # programs are already in your $PATH.
+    vi build_system_override.conf
 
   # build the catlib libraries only (not the test programs)
-  cd ../src
-  make veryclean
-  make
+    cd ../src
+    make veryclean
+    make
 
 Now one can change into the appropriate application directories that
 depend on catlib and build in those directories by simply typing
-'make'.
+'make'.  For example, to build rbtree0, you would 
+'cd /path/to/catrpi/apps/rbtree0' and then type 'make' therein.
 
 
 -------
@@ -141,9 +160,9 @@ To run a program that must be loaded onto a SD card:
 
 
 To run a program that must be loaded by the "loader" program:
-  * Perform the steps listed above for the "loader" program to run it on the
-    RPI.
-  * Build the program to run.
+  * Perform the steps listed above for the "loader" program (found in
+    apps/loader) to run it on the RPI at startup.
+  * Build the program you want to load with the loader.
   * When the "loader" program boots up issue the 'x' command to have it start
     receiving a file via xmodem.
   * Use the terminal program to send the file (APP.bin) via xmodem.  (example 
